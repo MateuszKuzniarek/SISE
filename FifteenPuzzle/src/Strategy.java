@@ -17,7 +17,7 @@ public abstract class Strategy
 
     public abstract void findSolution(State initialState);
 
-    public StrategyInformation getInfromation()
+    public StrategyInformation getInformation()
     {
         return information;
     }

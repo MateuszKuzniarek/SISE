@@ -86,7 +86,7 @@ public class Fifteen
     {
         loadFromFile(inputPath);
         findSolution();
-        writeResultToFile(resultPath, strategy.getInfromation());
-        writeAdditionalInformationToFile(additionalInformationPath, strategy.getInfromation());
+        writeResultToFile(resultPath, strategy.getInformation());
+        writeAdditionalInformationToFile(additionalInformationPath, strategy.getInformation());
     }
 }
