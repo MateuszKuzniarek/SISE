@@ -3,12 +3,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Fifteen
 {
-    private ArrayList<ArrayList<Integer>> initialState;
+    private State initialState;
     private Strategy strategy;
 
     public void setStrategy(Strategy strategy)
@@ -18,7 +17,6 @@ public class Fifteen
 
     public void loadFromFile(String path)
     {
-        initialState = new ArrayList<>();
         File file = new File(path);
         try
         {
@@ -26,14 +24,13 @@ public class Fifteen
             int height, width;
             height = Integer.valueOf(scanner.next());
             width = Integer.valueOf(scanner.next());
+            initialState = new State(height, width);
             for(int i=0; i<height; i++)
             {
-                ArrayList<Integer> row = new ArrayList<>();
                 for(int j=0; j<width; j++)
                 {
-                    row.add(Integer.valueOf(scanner.next()));
+                    initialState.set(i, j, Integer.valueOf(scanner.next()));
                 }
-                initialState.add(row);
             }
             scanner.close();
         }
@@ -80,16 +77,16 @@ public class Fifteen
         writeToFile(path, content);
     }
 
-    private StrategyInformation findSolution()
+    private void findSolution()
     {
-        return strategy.findSolution(initialState);
+        strategy.findSolution(initialState);
     }
 
     public void solve(String inputPath, String resultPath, String additionalInformationPath)
     {
         loadFromFile(inputPath);
-        StrategyInformation information = findSolution();
-        writeResultToFile(resultPath, information);
-        writeAdditionalInformationToFile(additionalInformationPath, information);
+        findSolution();
+        writeResultToFile(resultPath, strategy.getInfromation());
+        writeAdditionalInformationToFile(additionalInformationPath, strategy.getInfromation());
     }
 }
