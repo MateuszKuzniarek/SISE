@@ -7,7 +7,7 @@ public class Main
 
         if(args[0].equals("bfs"))
         {
-            //TO DO
+            strategy = new BFSStrategy(args[1]);
         }
         else if(args[0].equals("dfs"))
         {

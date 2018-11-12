@@ -25,6 +25,13 @@ public abstract class Strategy
         return i == size-1 && state.get((i/width),(i%width)) == 0;
     }
 
+    protected void markSolution(String solution)
+    {
+        this.isSolutionFound = true;
+        information.setSolutionLength(solution.length());
+        information.setSolution(solution);
+    }
+
     public abstract void findSolution(State initialState);
 
     public StrategyInformation getInformation()

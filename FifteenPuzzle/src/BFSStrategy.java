@@ -1,8 +1,13 @@
-public class DFSStrategy extends TreeSearchingStrategy
-{
-    private int maximalDepth = 20;
+import sun.reflect.generics.tree.Tree;
 
-    DFSStrategy(String permutation)
+import java.util.LinkedList;
+
+public class BFSStrategy extends TreeSearchingStrategy
+{
+    private String permutation;
+    private LinkedList<MoveArgs> moveArgs = new LinkedList<>();
+
+    BFSStrategy(String permutation)
     {
         this.permutation = permutation;
     }
@@ -11,7 +16,6 @@ public class DFSStrategy extends TreeSearchingStrategy
     {
         solution += move;
         information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1); //needs thinking through
-        if(solution.length()>maximalDepth) return;
         if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
         if(isSolutionFound) return;
         State newState = new State(state);
@@ -26,11 +30,10 @@ public class DFSStrategy extends TreeSearchingStrategy
             return;
         }
 
-        move(newState, permutation.charAt(0), solution);
-        move(newState, permutation.charAt(1), solution);
-        move(newState, permutation.charAt(2), solution);
-        move(newState, permutation.charAt(3), solution);
-
+        moveArgs.offer(new MoveArgs(newState, permutation.charAt(0), solution));
+        moveArgs.offer(new MoveArgs(newState, permutation.charAt(1), solution));
+        moveArgs.offer(new MoveArgs(newState, permutation.charAt(2), solution));
+        moveArgs.offer(new MoveArgs(newState, permutation.charAt(3), solution));
     }
 
     @Override
@@ -42,10 +45,17 @@ public class DFSStrategy extends TreeSearchingStrategy
         information = new StrategyInformation();
         information.setNumberOfVisitedStates(0);
         information.setNumberOfProcessedStates(0);
-        move(state, permutation.charAt(0), "");
-        move(state, permutation.charAt(1), "");
-        move(state, permutation.charAt(2), "");
-        move(state, permutation.charAt(3), "");
+        moveArgs.offer(new MoveArgs(state, permutation.charAt(0), ""));
+        moveArgs.offer(new MoveArgs(state, permutation.charAt(1), ""));
+        moveArgs.offer(new MoveArgs(state, permutation.charAt(2), ""));
+        moveArgs.offer(new MoveArgs(state, permutation.charAt(3), ""));
+
+        while(moveArgs.peek()!=null)
+        {
+            MoveArgs nextArgs = moveArgs.poll();
+            move(nextArgs.getState(), nextArgs.getMove(), nextArgs.getSolution());
+        }
+
         if(!isSolutionFound) information.setSolutionLength(-1);
         float elapsedTimeInMillis = (System.nanoTime() - startTime)/1000000f;
         information.setProcessTime(elapsedTimeInMillis);
