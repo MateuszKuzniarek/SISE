@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Fifteen
@@ -43,8 +45,8 @@ public class Fifteen
     private void writeToFile(String path, String content)
     {
         Path filePath = Paths.get(path);
-        File file = filePath.getParent().toFile();
-        file.mkdirs();
+        //File file = filePath.getParent().toFile();
+        //file.mkdirs();
         FileWriter writer;
         try
         {
@@ -62,18 +64,19 @@ public class Fifteen
     {
         String content = "";
         content += information.getSolutionLength();
-        if(information.getSolutionLength() == -1) content += "\n" + information.getSolution();
+        if(information.getSolutionLength() != -1) content += "\n" + information.getSolution();
         writeToFile(path, content);
     }
 
     private void writeAdditionalInformationToFile(String path, StrategyInformation information)
     {
+        NumberFormat formatter = new DecimalFormat("#0.000");
         String content = "";
         content += information.getSolutionLength() + "\n";
         content += information.getNumberOfVisitedStates() + "\n";
         content += information.getNumberOfProcessedStates() + "\n";
         content += information.getRecursionDepth() + "\n";
-        content += information.getProcessTime();
+        content += formatter.format(information.getProcessTime());
         writeToFile(path, content);
     }
 

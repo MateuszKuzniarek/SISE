@@ -11,6 +11,17 @@ public class State
         state = new int[height][width];
     }
 
+    State(State stateToCopy)
+    {
+        this.height = stateToCopy.getHeight();
+        this.width = stateToCopy.getWidth();
+        this.state = new int[height][];
+        for(int i=0; i<height; i++)
+        {
+            state[i] = stateToCopy.getState()[i].clone();
+        }
+    }
+
     public int get(int x, int y)
     {
         return state[x][y];
@@ -44,5 +55,10 @@ public class State
     public int getWidth()
     {
         return width;
+    }
+
+    public int[][] getState()
+    {
+        return state;
     }
 }

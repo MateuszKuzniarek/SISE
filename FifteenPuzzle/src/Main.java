@@ -2,24 +2,23 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Strategy strategy;
+        Strategy strategy = new DFSStrategy(args[1]); //initialization just to stop Intellij screaming
         Fifteen fifteen = new Fifteen();
 
-        if(args[0] == "bfs")
+        if(args[0].equals("bfs"))
         {
             //TO DO
         }
-        else if(args[0] == "dfs")
+        else if(args[0].equals("dfs"))
         {
-            //TO DO
+            strategy = new DFSStrategy(args[1]);
         }
-        else if(args[0] == "astr")
+        else if(args[0].equals("astr"))
         {
             //TO DO
         }
         else return;
-
-        //fifteen.setStrategy(strategy);
+        fifteen.setStrategy(strategy);
         fifteen.solve(args[2], args[3], args[4]);
     }
 }
