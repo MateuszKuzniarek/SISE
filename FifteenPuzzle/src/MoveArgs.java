@@ -3,6 +3,7 @@ public class MoveArgs
     private State state;
     private String solution;
     private char move;
+    private int cost;
 
     public MoveArgs(State state, char move, String solution)
     {
@@ -39,5 +40,15 @@ public class MoveArgs
     public void setMove(char move)
     {
         this.move = move;
+    }
+
+    public int getCost()
+    {
+        return cost;
+    }
+
+    public void setCost(int cost)
+    {
+        this.cost = cost;
     }
 }

@@ -2,7 +2,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Strategy strategy = new DFSStrategy(args[1]); //initialization just to stop Intellij screaming
+        Strategy strategy;
         Fifteen fifteen = new Fifteen();
 
         if(args[0].equals("bfs"))
@@ -15,7 +15,7 @@ public class Main
         }
         else if(args[0].equals("astr"))
         {
-            //TO DO
+            strategy = new AStarStrategy(args[1]);
         }
         else return;
         fifteen.setStrategy(strategy);

@@ -5,15 +5,18 @@ public abstract class Strategy
     protected boolean isSolutionFound;
     protected StrategyInformation information;
 
-    protected boolean swap(State state, int x1, int y1, int x2, int y2)
+    protected boolean validateCoordinates(State state, int x, int y)
     {
-        if(x2<0 || y2<0 || x1<0 || y1<0) return false;
-        if(x1>=state.getHeight() || x2>=state.getHeight()) return false;
-        if(y1>=state.getWidth() || y2>=state.getWidth()) return false;
+        if(x<0 || y<0) return false;
+        if(x>=state.getHeight() || y>=state.getWidth()) return false;
+        return true;
+    }
+
+    protected void swap(State state, int x1, int y1, int x2, int y2)
+    {
         int temp = state.get(x2, y2);
         state.set(x2, y2, state.get(x1, y1));
         state.set(x1, y1, temp);
-        return true;
     }
 
     protected boolean validateState(State state)
@@ -30,6 +33,55 @@ public abstract class Strategy
         this.isSolutionFound = true;
         information.setSolutionLength(solution.length());
         information.setSolution(solution);
+    }
+
+    protected boolean initiateMovement(String solution)
+    {
+        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1); //needs thinking through
+        if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
+        if(isSolutionFound) return false;
+        return true;
+    }
+
+    protected boolean validateMove(State state, char move, int[] zeroCoordinates)
+    {
+        if(move == 'L')
+        {
+            if(!validateCoordinates(state, zeroCoordinates[0], zeroCoordinates[1]-1)) return false;
+        }
+        else if(move == 'R')
+        {
+            if(!validateCoordinates(state, zeroCoordinates[0], zeroCoordinates[1]+1)) return false;
+        }
+        else if(move == 'U')
+        {
+            if(!validateCoordinates(state, zeroCoordinates[0]-1, zeroCoordinates[1])) return false;
+        }
+        else if(move == 'D')
+        {
+            if(!validateCoordinates(state, zeroCoordinates[0]+1, zeroCoordinates[1])) return false;
+        }
+        return true;
+    }
+
+    protected void decideWhereToMove(State state, char move, int[] zeroCoorfinates)
+    {
+        if(move == 'L')
+        {
+            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0], zeroCoorfinates[1]-1);
+        }
+        else if(move == 'R')
+        {
+            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0], zeroCoorfinates[1]+1);
+        }
+        else if(move == 'U')
+        {
+            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0]-1, zeroCoorfinates[1]);
+        }
+        else if(move == 'D')
+        {
+            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0]+1, zeroCoorfinates[1]);
+        }
     }
 
     public abstract void findSolution(State initialState);

@@ -1,6 +1,7 @@
-public class DFSStrategy extends TreeSearchingStrategy
+public class DFSStrategy extends Strategy
 {
     private int maximalDepth = 20;
+    private String permutation;
 
     DFSStrategy(String permutation)
     {
@@ -10,15 +11,12 @@ public class DFSStrategy extends TreeSearchingStrategy
     private void move(State state, char move, String solution)
     {
         solution += move;
-        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1); //needs thinking through
         if(solution.length()>maximalDepth) return;
-        if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
-        if(isSolutionFound) return;
+        if(!initiateMovement(solution)) return;
         State newState = new State(state);
 
-        if(!decideWhereToMove(newState, move)) return;
-
-        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
+        int[] zeroCoordinates = newState.find(0);
+        decideWhereToMove(newState, move, zeroCoordinates);
 
         if(validateState(newState))
         {
@@ -26,11 +24,13 @@ public class DFSStrategy extends TreeSearchingStrategy
             return;
         }
 
-        move(newState, permutation.charAt(0), solution);
-        move(newState, permutation.charAt(1), solution);
-        move(newState, permutation.charAt(2), solution);
-        move(newState, permutation.charAt(3), solution);
+        zeroCoordinates = newState.find(0);
+        if(validateMove(newState, permutation.charAt(0), zeroCoordinates)) move(newState, permutation.charAt(0), solution);
+        if(validateMove(newState, permutation.charAt(1), zeroCoordinates)) move(newState, permutation.charAt(1), solution);
+        if(validateMove(newState, permutation.charAt(2), zeroCoordinates)) move(newState, permutation.charAt(2), solution);
+        if(validateMove(newState, permutation.charAt(3), zeroCoordinates)) move(newState, permutation.charAt(3), solution);
 
+        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
     }
 
     @Override
@@ -42,10 +42,12 @@ public class DFSStrategy extends TreeSearchingStrategy
         information = new StrategyInformation();
         information.setNumberOfVisitedStates(0);
         information.setNumberOfProcessedStates(0);
-        move(state, permutation.charAt(0), "");
-        move(state, permutation.charAt(1), "");
-        move(state, permutation.charAt(2), "");
-        move(state, permutation.charAt(3), "");
+
+        int[] zeroCoordinates = state.find(0);
+        if(validateMove(state, permutation.charAt(0), zeroCoordinates)) move(state, permutation.charAt(0), "");
+        if(validateMove(state, permutation.charAt(1), zeroCoordinates)) move(state, permutation.charAt(1), "");
+        if(validateMove(state, permutation.charAt(2), zeroCoordinates)) move(state, permutation.charAt(2), "");
+        if(validateMove(state, permutation.charAt(3), zeroCoordinates)) move(state, permutation.charAt(3), "");
         if(!isSolutionFound) information.setSolutionLength(-1);
         float elapsedTimeInMillis = (System.nanoTime() - startTime)/1000000f;
         information.setProcessTime(elapsedTimeInMillis);
