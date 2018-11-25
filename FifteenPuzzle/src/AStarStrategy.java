@@ -35,6 +35,8 @@ public class AStarStrategy extends Strategy
     {
         if(!initiateMovement(solution)) return;
 
+        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
+
         if(validateState(state))
         {
             markSolution(solution);
@@ -48,7 +50,6 @@ public class AStarStrategy extends Strategy
         addMoveToList(state, zeroCoordinates, solution, 'U');
         addMoveToList(state, zeroCoordinates, solution, 'D');
 
-        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class AStarStrategy extends Strategy
 
         if(!isSolutionFound) information.setSolutionLength(-1);
         float elapsedTimeInMillis = (System.nanoTime() - startTime)/1000000f;
+        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+moveArgs.size());
         information.setProcessTime(elapsedTimeInMillis);
     }
 }

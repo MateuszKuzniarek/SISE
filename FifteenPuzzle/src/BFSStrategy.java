@@ -19,6 +19,8 @@ public class BFSStrategy extends Strategy
         int[] zeroCoordinates = newState.find(0);
         decideWhereToMove(newState, move, zeroCoordinates);
 
+        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
+
         if(validateState(newState))
         {
             markSolution(solution);
@@ -34,8 +36,6 @@ public class BFSStrategy extends Strategy
             moveArgs.offer(new MoveArgs(newState, permutation.charAt(2), solution));
         if(validateMove(newState, permutation.charAt(3), zeroCoordinates))
             moveArgs.offer(new MoveArgs(newState, permutation.charAt(3), solution));
-
-        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
     }
 
     @Override
@@ -65,6 +65,7 @@ public class BFSStrategy extends Strategy
 
         if(!isSolutionFound) information.setSolutionLength(-1);
         float elapsedTimeInMillis = (System.nanoTime() - startTime)/1000000f;
+        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+moveArgs.size());
         information.setProcessTime(elapsedTimeInMillis);
     }
 }

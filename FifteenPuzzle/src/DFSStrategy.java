@@ -18,6 +18,8 @@ public class DFSStrategy extends Strategy
         int[] zeroCoordinates = newState.find(0);
         decideWhereToMove(newState, move, zeroCoordinates);
 
+        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
+
         if(validateState(newState))
         {
             markSolution(solution);
@@ -29,8 +31,6 @@ public class DFSStrategy extends Strategy
         if(validateMove(newState, permutation.charAt(1), zeroCoordinates)) move(newState, permutation.charAt(1), solution);
         if(validateMove(newState, permutation.charAt(2), zeroCoordinates)) move(newState, permutation.charAt(2), solution);
         if(validateMove(newState, permutation.charAt(3), zeroCoordinates)) move(newState, permutation.charAt(3), solution);
-
-        information.setNumberOfProcessedStates(information.getNumberOfProcessedStates()+1);
     }
 
     @Override
