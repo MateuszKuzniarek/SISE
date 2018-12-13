@@ -37,7 +37,7 @@ public abstract class Strategy
 
     protected boolean initiateMovement(String solution)
     {
-        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1); //needs thinking through
+        information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1);
         if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
         if(isSolutionFound) return false;
         return true;
@@ -64,23 +64,23 @@ public abstract class Strategy
         return true;
     }
 
-    protected void decideWhereToMove(State state, char move, int[] zeroCoorfinates)
+    protected void decideWhereToMove(State state, char move, int[] zeroCoordinates)
     {
         if(move == 'L')
         {
-            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0], zeroCoorfinates[1]-1);
+            swap(state, zeroCoordinates[0], zeroCoordinates[1], zeroCoordinates[0], zeroCoordinates[1]-1);
         }
         else if(move == 'R')
         {
-            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0], zeroCoorfinates[1]+1);
+            swap(state, zeroCoordinates[0], zeroCoordinates[1], zeroCoordinates[0], zeroCoordinates[1]+1);
         }
         else if(move == 'U')
         {
-            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0]-1, zeroCoorfinates[1]);
+            swap(state, zeroCoordinates[0], zeroCoordinates[1], zeroCoordinates[0]-1, zeroCoordinates[1]);
         }
         else if(move == 'D')
         {
-            swap(state, zeroCoorfinates[0], zeroCoorfinates[1], zeroCoorfinates[0]+1, zeroCoorfinates[1]);
+            swap(state, zeroCoordinates[0], zeroCoordinates[1], zeroCoordinates[0]+1, zeroCoordinates[1]);
         }
     }
 

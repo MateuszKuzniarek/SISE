@@ -45,8 +45,6 @@ public class Fifteen
     private void writeToFile(String path, String content)
     {
         Path filePath = Paths.get(path);
-        //File file = filePath.getParent().toFile();
-        //file.mkdirs();
         FileWriter writer;
         try
         {
