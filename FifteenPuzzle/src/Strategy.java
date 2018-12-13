@@ -38,8 +38,8 @@ public abstract class Strategy
     protected boolean initiateMovement(String solution)
     {
         information.setNumberOfVisitedStates(information.getNumberOfVisitedStates()+1); //needs thinking through
-        if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
         if(isSolutionFound) return false;
+        if(information.getRecursionDepth()<solution.length()) information.setRecursionDepth(solution.length());
         return true;
     }
 
